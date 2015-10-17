@@ -17,48 +17,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oGd-aS-5AY">
-                                <rect key="frame" x="20" y="20" width="560" height="560"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWE-79-FLs">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="560"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="trailing" secondItem="oGd-aS-5AY" secondAttribute="trailingMargin" id="5VK-E1-Kgs"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="oGd-aS-5AY" secondAttribute="top" id="7eH-bM-oJZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="gWE-79-FLs" secondAttribute="trailing" id="CiF-Ph-99F"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="leading" secondItem="oGd-aS-5AY" secondAttribute="leading" id="DeJ-69-WLE"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="leading" secondItem="oGd-aS-5AY" secondAttribute="leadingMargin" id="FBh-BT-RYV"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="leading" secondItem="oGd-aS-5AY" secondAttribute="leading" id="HkX-TN-VyK"/>
-                                    <constraint firstAttribute="bottom" secondItem="gWE-79-FLs" secondAttribute="bottom" id="NaJ-kS-QuT"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="leading" secondItem="oGd-aS-5AY" secondAttribute="leading" id="OyN-fw-mou"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="oGd-aS-5AY" secondAttribute="top" id="PnN-Vs-DT0"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="centerY" secondItem="oGd-aS-5AY" secondAttribute="centerY" id="R2N-H8-zQX"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="bottom" secondItem="oGd-aS-5AY" secondAttribute="bottomMargin" id="Zkz-Ax-1dQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="gWE-79-FLs" secondAttribute="trailing" id="aat-jN-j3J"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="leading" secondItem="oGd-aS-5AY" secondAttribute="leading" id="h75-Io-U1z"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="oGd-aS-5AY" secondAttribute="top" id="jEO-Tn-vGO"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="oGd-aS-5AY" secondAttribute="top" id="n2p-Om-j2R"/>
-                                    <constraint firstAttribute="trailing" secondItem="gWE-79-FLs" secondAttribute="trailing" id="p4W-CO-Aca"/>
-                                    <constraint firstAttribute="bottom" secondItem="gWE-79-FLs" secondAttribute="bottom" id="rhk-ny-gxs"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="oGd-aS-5AY" secondAttribute="topMargin" id="xMQ-Ls-heG"/>
-                                    <constraint firstAttribute="bottom" secondItem="gWE-79-FLs" secondAttribute="bottom" id="xQc-1z-JJr"/>
-                                    <constraint firstItem="gWE-79-FLs" firstAttribute="centerX" secondItem="oGd-aS-5AY" secondAttribute="centerX" id="xWh-Ee-Zk5"/>
-                                </constraints>
-                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKt-O8-S7A">
+                                <rect key="frame" x="20" y="20" width="560" height="572"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="cDY-Cb-5xw" appends="YES" id="5AG-c8-Odw"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="gWE-79-FLs" secondAttribute="trailing" id="4hA-i6-CB9"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gWE-79-FLs" secondAttribute="bottom" constant="20" id="73i-cu-yyO"/>
-                            <constraint firstItem="gWE-79-FLs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="gSh-ax-yHp"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="gWE-79-FLs" secondAttribute="leading" id="jkO-6W-jLL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zKt-O8-S7A" secondAttribute="trailing" id="14I-Xa-dBP"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="zKt-O8-S7A" secondAttribute="leading" id="BI8-Yq-oan"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zKt-O8-S7A" secondAttribute="bottom" constant="8" symbolic="YES" id="JZT-W4-ZZK"/>
+                            <constraint firstItem="zKt-O8-S7A" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="miw-Ru-grE"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="gameView" destination="zKt-O8-S7A" id="wvX-bp-M3M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cDY-Cb-5xw">
+                    <connections>
+                        <action selector="randomPush:" destination="BYZ-38-t0r" id="33V-Me-iGc"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="340" y="311"/>
         </scene>
