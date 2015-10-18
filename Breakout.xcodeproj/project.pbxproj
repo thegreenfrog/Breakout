@@ -15,7 +15,7 @@
 		8CB3BE761BD1866000639535 /* BreakoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE751BD1866000639535 /* BreakoutUITests.swift */; };
 		8CB3BE841BD186EE00639535 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE831BD186EE00639535 /* GameViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		8CB3BE861BD186F800639535 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE851BD186F800639535 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		8CB3BE881BD187C600639535 /* ballBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE871BD187C600639535 /* ballBehavior.swift */; settings = {ASSET_TAGS = (); }; };
+		8CB3BE881BD187C600639535 /* BallBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE871BD187C600639535 /* BallBehavior.swift */; settings = {ASSET_TAGS = (); }; };
 		8CB3BE8A1BD1966300639535 /* DrawGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE891BD1966300639535 /* DrawGameView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -51,7 +51,7 @@
 		8CB3BE771BD1866000639535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CB3BE831BD186EE00639535 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		8CB3BE851BD186F800639535 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		8CB3BE871BD187C600639535 /* ballBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ballBehavior.swift; sourceTree = "<group>"; };
+		8CB3BE871BD187C600639535 /* BallBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallBehavior.swift; sourceTree = "<group>"; };
 		8CB3BE891BD1966300639535 /* DrawGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +105,7 @@
 			children = (
 				8CB3BE591BD1866000639535 /* Main.storyboard */,
 				8CB3BE831BD186EE00639535 /* GameViewController.swift */,
-				8CB3BE871BD187C600639535 /* ballBehavior.swift */,
+				8CB3BE871BD187C600639535 /* BallBehavior.swift */,
 				8CB3BE891BD1966300639535 /* DrawGameView.swift */,
 				8CB3BE851BD186F800639535 /* SettingsViewController.swift */,
 				8CB3BE5C1BD1866000639535 /* Assets.xcassets */,
@@ -264,7 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CB3BE881BD187C600639535 /* ballBehavior.swift in Sources */,
+				8CB3BE881BD187C600639535 /* BallBehavior.swift in Sources */,
 				8CB3BE841BD186EE00639535 /* GameViewController.swift in Sources */,
 				8CB3BE561BD1866000639535 /* AppDelegate.swift in Sources */,
 				8CB3BE861BD186F800639535 /* SettingsViewController.swift in Sources */,

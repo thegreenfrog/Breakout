@@ -23,16 +23,16 @@ class GameViewController: UIViewController {
         case .Changed:
             let translation = sender.translationInView(gameView)
             let horizontalMove = translation.x
-            if ((paddleRect.center.x - CGFloat(paddleHalfWidth)) + horizontalMove) >= 0 && ((paddleRect.center.x + CGFloat(paddleHalfWidth)) + horizontalMove) <= gameView.bounds.size.width {
-                paddleRect.center.x += horizontalMove
-            }
+            paddleRect.frame.origin.x = max(min(paddleRect.frame.origin.x + horizontalMove, gameView.bounds.maxX - paddleSize.width), 0.0)
+            let newPaddle = UIBezierPath(rect: paddleRect.frame)
+            ballBehavior.addBarrier(newPaddle, named: "paddle")
             sender.setTranslation(CGPointZero, inView: gameView)
         default: break
         }
     }
     
     @IBAction func randomPush(sender: UITapGestureRecognizer) {
-        ballBehavior.activeRandomPush()
+        ballBehavior.activeRandomPush(ballBehavior.balls.last!)
     }
     
     let ballBehavior = BallBehavior()
@@ -41,27 +41,24 @@ class GameViewController: UIViewController {
         let diameter = 10
         return CGSize(width: diameter, height: diameter)
     }
-    
-    let paddleHalfWidth = 40
-    
     var paddleSize: CGSize {
-        return CGSize(width: paddleHalfWidth*2, height: 10)
+        return CGSize(width: 80, height: 10)
     }
     
-    var paddleRect: UIView!
+    lazy var paddleRect: UIView = {
+        //draw paddle
+        var frame = CGRect(origin: CGPointZero, size: self.paddleSize)
+        frame.origin.x = self.gameView.bounds.midX
+        frame.origin.y = (self.gameView.bounds.size.height * 9) / 10
+        let paddleRect = UIView(frame: frame)
+        paddleRect.backgroundColor = UIColor.blackColor()
+        return paddleRect
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dynamicAnimator.addBehavior(ballBehavior)
-        
-        //draw paddle
-        var frame = CGRect(origin: CGPointZero, size: paddleSize)
-        frame.origin.x = gameView.bounds.size.width / 2
-        frame.origin.y = (gameView.bounds.size.height * 2) / 3
-        paddleRect = UIView(frame: frame)
-        paddleRect.backgroundColor = UIColor.blackColor()
         gameView.addSubview(paddleRect)
-        
         //one ball to start with
         newBall()
     }
@@ -69,8 +66,8 @@ class GameViewController: UIViewController {
     //add new ball to game
     private func newBall() {
         var frame = CGRect(origin: CGPointZero, size: ballSize)
-        frame.origin.x = gameView.bounds.size.width / 2
-        frame.origin.y = gameView.bounds.size.height / 2
+        frame.origin.x = gameView.bounds.midX
+        frame.origin.y = gameView.bounds.midY
         let ballView = UIView(frame: frame)
         ballView.backgroundColor = UIColor.blueColor()
         ballBehavior.addBall(ballView)

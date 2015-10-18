@@ -22,22 +22,21 @@ class BallBehavior: UIDynamicBehavior
         let lazilyCreatedDropBehavior = UIDynamicItemBehavior()
         lazilyCreatedDropBehavior.allowsRotation = false
         lazilyCreatedDropBehavior.resistance = 0
+        lazilyCreatedDropBehavior.friction = 0
         lazilyCreatedDropBehavior.elasticity = 1
         return lazilyCreatedDropBehavior
         }()
     
-    //handle the randomp push on the ball
-    lazy var randomPushBehavior: UIPushBehavior = {
-        let lazilyCreatedRandomPush = UIPushBehavior(items: [], mode: UIPushBehaviorMode.Instantaneous)
-        lazilyCreatedRandomPush.active = false
-        return lazilyCreatedRandomPush
-    }()
+    var balls:[UIView] {
+        get {
+            return collider.items.filter{$0 is UIView}.map{$0 as! UIView}
+        }
+    }
     
     override init() {
         super.init()
         addChildBehavior(collider)
         addChildBehavior(objectBehavior)
-        addChildBehavior(randomPushBehavior)
     }
     
     func addBarrier(path: UIBezierPath, named name: String) {
@@ -52,20 +51,26 @@ class BallBehavior: UIDynamicBehavior
     
     func addBall(ball: UIView) {
         dynamicAnimator?.referenceView?.addSubview(ball)
-        randomPushBehavior.addItem(ball)//NEES TO BE DYANMIC ITEM
+        objectBehavior.addItem(ball)
         collider.addItem(ball)
     }
     
     func removeBall(ball: UIView) {
         collider.removeItem(ball)
+        objectBehavior.removeItem(ball)
         ball.removeFromSuperview()
     }
     
-    func activeRandomPush() {
-        let xDirection = (Double(arc4random()%20) * 0.01) * (Double(arc4random()%2) * -1)
-        let yDirection = (Double(arc4random()%20) * 0.01) * (Double(arc4random()%2) * -1)
-        print("\(xDirection), \(yDirection)")
-        randomPushBehavior.pushDirection = CGVector(dx: xDirection, dy: yDirection)
-        randomPushBehavior.active = true;
+    func activeRandomPush(ball: UIView) {
+        let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
+        push.magnitude = 0.05
+        
+        push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
+        push.action = { [weak push] in
+            if !push!.active {
+                self.removeChildBehavior(push!)
+            }
+        }
+        addChildBehavior(push)
     }
 }
