@@ -20,7 +20,8 @@ class BallBehavior: UIDynamicBehavior
     
     lazy var objectBehavior: UIDynamicItemBehavior = {
         let lazilyCreatedDropBehavior = UIDynamicItemBehavior()
-        lazilyCreatedDropBehavior.allowsRotation = true
+        lazilyCreatedDropBehavior.allowsRotation = false
+        lazilyCreatedDropBehavior.resistance = 0
         lazilyCreatedDropBehavior.elasticity = 1
         return lazilyCreatedDropBehavior
         }()
@@ -28,7 +29,6 @@ class BallBehavior: UIDynamicBehavior
     //handle the randomp push on the ball
     lazy var randomPushBehavior: UIPushBehavior = {
         let lazilyCreatedRandomPush = UIPushBehavior(items: [], mode: UIPushBehaviorMode.Instantaneous)
-        lazilyCreatedRandomPush.pushDirection = CGVector(dx: (Double(arc4random()%20) * 0.01), dy: (Double(arc4random()%20) * 0.01))
         lazilyCreatedRandomPush.active = false
         return lazilyCreatedRandomPush
     }()
@@ -62,6 +62,10 @@ class BallBehavior: UIDynamicBehavior
     }
     
     func activeRandomPush() {
+        let xDirection = (Double(arc4random()%20) * 0.01) * (Double(arc4random()%2) * -1)
+        let yDirection = (Double(arc4random()%20) * 0.01) * (Double(arc4random()%2) * -1)
+        print("\(xDirection), \(yDirection)")
+        randomPushBehavior.pushDirection = CGVector(dx: xDirection, dy: yDirection)
         randomPushBehavior.active = true;
     }
 }
