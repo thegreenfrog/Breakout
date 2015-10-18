@@ -23,7 +23,9 @@ class GameViewController: UIViewController {
         case .Changed:
             let translation = sender.translationInView(gameView)
             let horizontalMove = translation.x
-            paddleRect.center.x += horizontalMove
+            if ((paddleRect.center.x - CGFloat(paddleHalfWidth)) + horizontalMove) >= 0 && ((paddleRect.center.x + CGFloat(paddleHalfWidth)) + horizontalMove) <= gameView.bounds.size.width {
+                paddleRect.center.x += horizontalMove
+            }
             sender.setTranslation(CGPointZero, inView: gameView)
         default: break
         }
@@ -40,8 +42,10 @@ class GameViewController: UIViewController {
         return CGSize(width: diameter, height: diameter)
     }
     
+    let paddleHalfWidth = 40
+    
     var paddleSize: CGSize {
-        return CGSize(width: 80, height: 10)
+        return CGSize(width: paddleHalfWidth*2, height: 10)
     }
     
     var paddleRect: UIView!
