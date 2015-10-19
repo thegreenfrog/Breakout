@@ -39,10 +39,16 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     @IBAction func randomPush(sender: UITapGestureRecognizer) {
+        if ballNum == 0 {
+            newBall()
+            return
+        }
         ballBehavior.activeRandomPush(ballBehavior.balls.last!)
     }
     
     // MARK: - Object Specs
+    
+    private var ballNum = 0
     
     var ballSize: CGSize {
         let diameter = 10
@@ -94,7 +100,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         //create bricks
         setBrickBoundaries()
         //one ball to start with
-        newBall()
+        //newBall()
     }
     
     // MARK: - Brick Methods
@@ -144,6 +150,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
                     //remove the ball... somehow
                     print("ball should be removed")
                     ballBehavior.removeBall(object)
+                    ballNum--
                 }
             }
             
@@ -167,6 +174,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         let ballView = UIView(frame: frame)
         ballView.backgroundColor = UIColor.blueColor()
         ballBehavior.addBall(ballView)
+        ballNum++
     }
 
 }
