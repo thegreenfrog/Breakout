@@ -15,6 +15,14 @@ class BallBehavior: UIDynamicBehavior
     lazy var collider: UICollisionBehavior = {
         let lazilyCreatedCollider = UICollisionBehavior()
         lazilyCreatedCollider.translatesReferenceBoundsIntoBoundary = true
+        lazilyCreatedCollider.action = {
+            for ball in self.balls {
+                //FIGURE OUT HOW TO REMOVE BALL ONCE IT HITS BOTTOM
+                if !CGRectIntersectsRect(self.dynamicAnimator!.referenceView!.bounds, ball.frame) {
+                    self.removeBall(ball)
+                }
+            }
+        }
         return lazilyCreatedCollider
         }()
     
@@ -39,7 +47,7 @@ class BallBehavior: UIDynamicBehavior
         addChildBehavior(objectBehavior)
     }
     
-    func addBarrier(path: UIBezierPath, named name: String) {
+    func addBarrier(path: UIBezierPath, named name: NSCopying) {
         collider.removeBoundaryWithIdentifier(name)
         collider.addBoundaryWithIdentifier(name, forPath: path)
     }

@@ -12,10 +12,16 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var gameView: UIView!
     
+    // MARK: - Animation
+    
     lazy var dynamicAnimator:UIDynamicAnimator = {
         let lazyinstance = UIDynamicAnimator(referenceView: self.gameView)
         return lazyinstance
     }()
+    
+    let ballBehavior = BallBehavior()
+    
+    // MARK: - Gestures
     
     @IBAction func movePaddle(sender: UIPanGestureRecognizer) {
         switch sender.state {
@@ -35,7 +41,7 @@ class GameViewController: UIViewController {
         ballBehavior.activeRandomPush(ballBehavior.balls.last!)
     }
     
-    let ballBehavior = BallBehavior()
+    // MARK: - Object Specs
     
     var ballSize: CGSize {
         let diameter = 10
@@ -55,14 +61,78 @@ class GameViewController: UIViewController {
         return paddleRect
     }()
     
+    var bricks = [Int: Brick]()
+    
+    struct Brick {
+        var Frame: CGRect
+        var viewInstance: UIView
+    }
+    
+    struct Constants {
+        static let BrickColumns = 10
+        static let BrickRows = 8
+        static let BrickTotalWidth: CGFloat = 1.0
+        static let BrickTotalHeight: CGFloat = 0.3
+        static let BrickTopSpacing: CGFloat = 0.05
+        static let BrickSpacing: CGFloat = 5.0
+        static let BrickCornerRadius: CGFloat = 2.5
+        static let BrickColors = [UIColor.greenColor(), UIColor.blueColor(), UIColor.redColor(), UIColor.yellowColor()]
+    }
+    
+    // MARK: - View Controller Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        drawBricks()
         dynamicAnimator.addBehavior(ballBehavior)
+    }
+    
+    override func viewDidLayoutSubviews() {
         gameView.addSubview(paddleRect)
+        //create bricks
+        setBrickBoundaries()
         //one ball to start with
         newBall()
     }
     
+    // MARK: - Brick Methods
+    
+    private func drawBricks() {
+        //only add if first starting up or restarting
+        if bricks.count > 0 {return}
+        
+        let heightProportion = Constants.BrickTotalHeight / CGFloat(Constants.BrickRows)
+        let widthProportion = Constants.BrickTotalWidth / CGFloat(Constants.BrickColumns)
+        var frame = CGRect(origin: CGPointZero, size: CGSize(width: widthProportion, height: heightProportion))
+        for row in 0..<Constants.BrickRows {
+            for col in 0..<Constants.BrickColumns {
+                frame.origin.x = widthProportion * CGFloat(col)
+                frame.origin.y = heightProportion * CGFloat(row) + Constants.BrickTopSpacing
+                let brickView = UIView(frame: frame)
+                brickView.backgroundColor = Constants.BrickColors[row % Constants.BrickColors.count]
+                brickView.layer.cornerRadius = Constants.BrickCornerRadius
+                brickView.layer.borderColor = UIColor.blackColor().CGColor
+                brickView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+                brickView.layer.shadowOpacity = 0.1
+                
+                gameView.addSubview(brickView)
+                bricks[row * Constants.BrickColumns + col] = Brick(Frame: frame, viewInstance: brickView)
+            }
+        }
+    }
+    
+    private func setBrickBoundaries() {
+        for (index, brick) in bricks {
+            brick.viewInstance.frame.origin.x = brick.Frame.origin.x * gameView.bounds.width
+            brick.viewInstance.frame.origin.y = brick.Frame.origin.y * gameView.bounds.height
+            brick.viewInstance.frame.size.width = brick.Frame.width * gameView.bounds.width
+            brick.viewInstance.frame.size.height = brick.Frame.height * gameView.bounds.height
+            brick.viewInstance.frame = CGRectInset(brick.viewInstance.frame, Constants.BrickSpacing, Constants.BrickSpacing)
+            ballBehavior.addBarrier(UIBezierPath(roundedRect: brick.viewInstance.frame, cornerRadius: Constants.BrickCornerRadius), named: index)
+        }
+    }
+    
+    // MARK: - Ball Action
     //add new ball to game
     private func newBall() {
         var frame = CGRect(origin: CGPointZero, size: ballSize)
