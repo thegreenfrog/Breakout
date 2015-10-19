@@ -8,7 +8,8 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
+
+class GameViewController: UIViewController, UICollisionBehaviorDelegate {
 
     @IBOutlet weak var gameView: UIView!
     
@@ -83,6 +84,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ballBehavior.collisionDelegate = self
         drawBricks()
         dynamicAnimator.addBehavior(ballBehavior)
     }
@@ -130,6 +132,20 @@ class GameViewController: UIViewController {
             brick.viewInstance.frame = CGRectInset(brick.viewInstance.frame, Constants.BrickSpacing, Constants.BrickSpacing)
             ballBehavior.addBarrier(UIBezierPath(roundedRect: brick.viewInstance.frame, cornerRadius: Constants.BrickCornerRadius), named: index)
         }
+    }
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint) {
+        if let index = identifier as? Int {
+            removeBrick(index)
+        }
+    }
+    
+    private func removeBrick(index: Int) {
+        if let brick = bricks[index] {
+            brick.viewInstance.removeFromSuperview()
+        }
+        bricks.removeValueForKey(index)
+        ballBehavior.removeBarrier(index)
     }
     
     // MARK: - Ball Action

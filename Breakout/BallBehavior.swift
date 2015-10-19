@@ -10,6 +10,10 @@ import UIKit
 
 class BallBehavior: UIDynamicBehavior
 {
+    var collisionDelegate: UICollisionBehaviorDelegate? {
+        get { return collider.collisionDelegate }
+        set { collider.collisionDelegate = newValue }
+    }
     
     //collision for wall, paddle, and bricks
     lazy var collider: UICollisionBehavior = {
@@ -52,7 +56,7 @@ class BallBehavior: UIDynamicBehavior
         collider.addBoundaryWithIdentifier(name, forPath: path)
     }
     
-    func removeBarrier(name: String) {
+    func removeBarrier(name: NSCopying) {
         collider.removeBoundaryWithIdentifier(name)
         //need to remove this subview too
     }
