@@ -137,6 +137,16 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint) {
         if let index = identifier as? Int {
             removeBrick(index)
+        } else if p.y > paddleRect.frame.origin.y {
+            //ball has gone below the paddle
+            for object in ballBehavior.balls {
+                if object.isEqual(item) {
+                    //remove the ball... somehow
+                    print("ball should be removed")
+                    ballBehavior.removeBall(object)
+                }
+            }
+            
         }
     }
     
