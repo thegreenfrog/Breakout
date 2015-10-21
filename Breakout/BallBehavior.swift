@@ -28,7 +28,7 @@ class BallBehavior: UIDynamicBehavior
             }
         }
         return lazilyCreatedCollider
-        }()
+    }()
     
     lazy var objectBehavior: UIDynamicItemBehavior = {
         let lazilyCreatedDropBehavior = UIDynamicItemBehavior()

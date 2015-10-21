@@ -86,6 +86,20 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         static let BrickSpacing: CGFloat = 5.0
         static let BrickCornerRadius: CGFloat = 2.5
         static let BrickColors = [UIColor.greenColor(), UIColor.blueColor(), UIColor.redColor(), UIColor.yellowColor()]
+        
+        static let PauseString = "Pause"
+        static let ResumeString = "Resume"
+    }
+    
+    @IBAction func togglePause(sender: UIButton) {
+        print("\(sender.titleLabel!.text)")
+        if sender.titleLabel!.text! == Constants.PauseString {
+            print("stopping")
+            sender.setTitle(Constants.ResumeString, forState: .Normal)
+        } else if sender.titleLabel!.text! == Constants.ResumeString {
+            print("resuming")
+            sender.setTitle(Constants.PauseString, forState: .Normal)
+        }
     }
     
     // MARK: - View Controller Lifecycle
