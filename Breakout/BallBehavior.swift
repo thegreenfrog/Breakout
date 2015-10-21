@@ -61,6 +61,10 @@ class BallBehavior: UIDynamicBehavior
         //need to remove this subview too
     }
     
+    func removeBrick(index: Int) {
+        removeBarrier(index)
+    }
+    
     func addBall(ball: UIView) {
         dynamicAnimator?.referenceView?.addSubview(ball)
         objectBehavior.addItem(ball)

@@ -70,6 +70,8 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     
     var bricks = [Int: Brick]()
     
+    private var bricksDestroyed = 0
+    
     struct Brick {
         var Frame: CGRect
         var viewInstance: UIView
@@ -77,9 +79,9 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     
     struct Constants {
         static let BrickColumns = 10
-        static let BrickRows = 8
+        static let BrickRows = 5
         static let BrickTotalWidth: CGFloat = 1.0
-        static let BrickTotalHeight: CGFloat = 0.3
+        static let BrickTotalHeight: CGFloat = 0.2
         static let BrickTopSpacing: CGFloat = 0.05
         static let BrickSpacing: CGFloat = 5.0
         static let BrickCornerRadius: CGFloat = 2.5
@@ -92,6 +94,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         super.viewDidLoad()
         ballBehavior.collisionDelegate = self
         drawBricks()
+        print("bricks: \(bricks.count)")
         dynamicAnimator.addBehavior(ballBehavior)
     }
     
@@ -99,8 +102,6 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         gameView.addSubview(paddleRect)
         //create bricks
         setBrickBoundaries()
-        //one ball to start with
-        //newBall()
     }
     
     // MARK: - Brick Methods
@@ -122,7 +123,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
                 brickView.layer.borderColor = UIColor.blackColor().CGColor
                 brickView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
                 brickView.layer.shadowOpacity = 0.1
-                
+                print("added subview \(row * Constants.BrickColumns + col)")
                 gameView.addSubview(brickView)
                 bricks[row * Constants.BrickColumns + col] = Brick(Frame: frame, viewInstance: brickView)
             }
@@ -147,22 +148,61 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
             //ball has gone below the paddle
             for object in ballBehavior.balls {
                 if object.isEqual(item) {
-                    //remove the ball... somehow
-                    print("ball should be removed")
-                    ballBehavior.removeBall(object)
-                    ballNum--
+//                    ballBehavior.removeBall(object)
+//                    ballNum--
                 }
             }
             
         }
     }
     
+    func restartGame() {
+        gameView.subviews.forEach({ $0.removeFromSuperview() })
+        ballNum = 0
+        bricksDestroyed = 0
+        gameView.addSubview(paddleRect)
+        setBrickBoundaries()
+        drawBricks()
+    }
+    
     private func removeBrick(index: Int) {
         if let brick = bricks[index] {
             brick.viewInstance.removeFromSuperview()
+            bricks.removeValueForKey(index)
+            ballBehavior.removeBrick(index)
+            bricksDestroyed++
         }
-        bricks.removeValueForKey(index)
-        ballBehavior.removeBarrier(index)
+        //check if user has destroyed all bricks
+        print("\(bricksDestroyed)")
+        if bricks.count == 0 {
+            print("destoryed: \(bricksDestroyed) bricks total: \(bricks.count)")
+            let alert = UIAlertController(title: "You've won!", message: "Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(
+                title: "Yes",
+                style: UIAlertActionStyle.Default)
+                { (action: UIAlertAction) -> Void in
+                    self.restartGame()
+                }
+            )
+            alert.addAction(UIAlertAction(
+                title: "No",
+                style: .Destructive)
+                { (action: UIAlertAction) -> Void in
+                    print("Game Over")
+                }
+            )
+            alert.addAction(UIAlertAction(
+                title: "Cancel",
+                style: .Cancel)
+                { (action: UIAlertAction) -> Void in
+                    
+                }
+            )
+            
+            presentViewController(alert, animated: true, completion: nil)
+            
+        }
+        
     }
     
     // MARK: - Ball Action
