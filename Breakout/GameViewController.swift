@@ -75,6 +75,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     struct Brick {
         var Frame: CGRect
         var viewInstance: UIView
+        var hitPoints: Int
     }
     
     struct Constants {
@@ -118,6 +119,15 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         setBrickBoundaries()
     }
     
+    func restartGame() {
+        gameView.subviews.forEach({ $0.removeFromSuperview() })
+        ballNum = 0
+        bricksDestroyed = 0
+        gameView.addSubview(paddleRect)
+        setBrickBoundaries()
+        drawBricks()
+    }
+    
     // MARK: - Brick Methods
     
     private func drawBricks() {
@@ -132,14 +142,17 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
                 frame.origin.x = widthProportion * CGFloat(col)
                 frame.origin.y = heightProportion * CGFloat(row) + Constants.BrickTopSpacing
                 let brickView = UIView(frame: frame)
-                brickView.backgroundColor = Constants.BrickColors[row % Constants.BrickColors.count]
                 brickView.layer.cornerRadius = Constants.BrickCornerRadius
                 brickView.layer.borderColor = UIColor.blackColor().CGColor
                 brickView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
                 brickView.layer.shadowOpacity = 0.1
+                
+                //generate random type of brick
+                let type = Int(arc4random() % 3)
+                brickView.backgroundColor = Constants.BrickColors[type]
                 print("added subview \(row * Constants.BrickColumns + col)")
                 gameView.addSubview(brickView)
-                bricks[row * Constants.BrickColumns + col] = Brick(Frame: frame, viewInstance: brickView)
+                bricks[row * Constants.BrickColumns + col] = Brick(Frame: frame, viewInstance: brickView, hitPoints: type + 1)
             }
         }
     }
@@ -170,21 +183,19 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    func restartGame() {
-        gameView.subviews.forEach({ $0.removeFromSuperview() })
-        ballNum = 0
-        bricksDestroyed = 0
-        gameView.addSubview(paddleRect)
-        setBrickBoundaries()
-        drawBricks()
-    }
-    
     private func removeBrick(index: Int) {
         if let brick = bricks[index] {
-            brick.viewInstance.removeFromSuperview()
-            bricks.removeValueForKey(index)
-            ballBehavior.removeBrick(index)
-            bricksDestroyed++
+            if brick.hitPoints == 0 {
+                bricks.removeValueForKey(index)
+                ballBehavior.removeBrick(index, view: brick.viewInstance)
+                bricksDestroyed++
+            }
+            else {
+//                let snap = UISnapBehavior(item: ballBehavior.collider.items[index], snapToPoint: brick.Frame.origin)
+//                dynamicAnimator.addBehavior(snap)
+                bricks[index]!.hitPoints--
+            }
+           
         }
         //check if user has destroyed all bricks
         print("\(bricksDestroyed)")

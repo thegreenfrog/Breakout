@@ -15,13 +15,14 @@ class BallBehavior: UIDynamicBehavior
         set { collider.collisionDelegate = newValue }
     }
     
+    let gravity = UIGravityBehavior()
+    
     //collision for wall, paddle, and bricks
     lazy var collider: UICollisionBehavior = {
         let lazilyCreatedCollider = UICollisionBehavior()
         lazilyCreatedCollider.translatesReferenceBoundsIntoBoundary = true
         lazilyCreatedCollider.action = {
             for ball in self.balls {
-                //FIGURE OUT HOW TO REMOVE BALL ONCE IT HITS BOTTOM
                 if !CGRectIntersectsRect(self.dynamicAnimator!.referenceView!.bounds, ball.frame) {
                     self.removeBall(ball)
                 }
@@ -47,6 +48,7 @@ class BallBehavior: UIDynamicBehavior
     
     override init() {
         super.init()
+        addChildBehavior(gravity)
         addChildBehavior(collider)
         addChildBehavior(objectBehavior)
     }
@@ -61,7 +63,8 @@ class BallBehavior: UIDynamicBehavior
         //need to remove this subview too
     }
     
-    func removeBrick(index: Int) {
+    func removeBrick(index: Int, view: UIView) {
+        gravity.addItem(view)
         removeBarrier(index)
     }
     

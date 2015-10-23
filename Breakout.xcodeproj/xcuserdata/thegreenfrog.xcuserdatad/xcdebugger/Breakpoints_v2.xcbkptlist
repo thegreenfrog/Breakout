@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breakout/GameViewController.swift"
-            timestampString = "467132857.499846"
+            timestampString = "467265170.360266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "removeBrick(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,61 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breakout/GameViewController.swift"
-            timestampString = "467132857.499846"
+            timestampString = "467265170.360266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "removeBrick(_:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Breakout/GameViewController.swift"
-            timestampString = "467132857.499846"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "restartGame()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Breakout.GameViewController.restartGame (Breakout.GameViewController)() -&gt; ()"
-                  moduleName = "Breakout"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thegreenfrog/Developer/Breakout/Breakout/GameViewController.swift"
-                  timestampString = "467095898.424995"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "160"
-                  endingLineNumber = "160"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Breakout.GameViewController.(restartGame (Breakout.GameViewController) -&gt; () -&gt; ()).(closure #1)"
-                  moduleName = "Breakout"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thegreenfrog/Developer/Breakout/Breakout/GameViewController.swift"
-                  timestampString = "467095898.425308"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "160"
-                  endingLineNumber = "160"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -90,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breakout/BallBehavior.swift"
-            timestampString = "467095716.43448"
+            timestampString = "467265170.360266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "removeBrick(_:)"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "removeBrick(_:view:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breakout/GameViewController.swift"
-            timestampString = "467132857.499846"
+            timestampString = "467265170.360266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
             landmarkName = "removeBrick(_:)"
             landmarkType = "5">
          </BreakpointContent>
