@@ -53,7 +53,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     
     // MARK: - Object Specs
     var speedRatio = Float(0.5)
-    var brickRows = 3
+    var brickRows = 5
     
     private var ballNum = 0
     private var maxBallNum = 1
@@ -89,7 +89,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     struct Constants {
         static let BrickColumns = 10
         static let BrickTotalWidth: CGFloat = 1.0
-        static let BrickTotalHeight: CGFloat = 0.2
+        static let BrickProportionHeight: CGFloat = 0.04
         static let BrickTopSpacing: CGFloat = 0.05
         static let BrickSpacing: CGFloat = 5.0
         static let BrickCornerRadius: CGFloat = 2.5
@@ -196,7 +196,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         //only add if first starting up or restarting
         if bricks.count > 0 {return}
         print("number of rows: \(brickRows)")
-        let heightProportion = Constants.BrickTotalHeight / CGFloat(brickRows)
+        let heightProportion = Constants.BrickProportionHeight
         let widthProportion = Constants.BrickTotalWidth / CGFloat(Constants.BrickColumns)
         var frame = CGRect(origin: CGPointZero, size: CGSize(width: widthProportion, height: heightProportion))
         for row in 0..<brickRows {

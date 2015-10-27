@@ -21,9 +21,7 @@ class SettingsViewController: UIViewController {
     
     @IBAction func rowNumChanged(sender: UISlider) {
         rows = Int(sender.value)
-        print("Setting row: \(rows)")
-        Setting().row = rows
-        print("new row setting: \(Setting().row)")
+        //print("Setting row: \(Int(sender.value))")
         Setting().Changed = true
     }
     
@@ -48,8 +46,10 @@ class SettingsViewController: UIViewController {
             return Int(Setting().row)
         }
         set {
-            print(newValue)
+            //print(newValue)
             rowNumDisplay.text = "\(newValue)"
+            Setting().row = newValue
+            print("new row setting: \(Setting().row)")
             //rowNumSlider.value = Float(newValue)
         }
     }
@@ -82,8 +82,8 @@ class SettingsViewController: UIViewController {
         ballNum = Setting().balls
         speed = Setting().speed
         speedSlider.maximumValue = Float(1)
-        print(speed)
-        speedSlider.setValue(speed * 100, animated: true)
+        //print(speed)
+        speedSlider.setValue(speed, animated: true)
     }
     
     override func viewDidLoad() {
