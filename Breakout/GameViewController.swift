@@ -20,11 +20,13 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         return lazyinstance
     }()
     
-    let ballBehavior = BallBehavior()
+    var ballBehavior = BallBehavior()
+    
+    var autoStartTimer: NSTimer?
     
     // MARK: - Gestures
     
-    @IBAction func movePaddle(sender: UIPanGestureRecognizer) {
+    func movePaddle(sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .Ended: fallthrough
         case .Changed:
@@ -38,17 +40,23 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    @IBAction func randomPush(sender: UITapGestureRecognizer) {
-        if ballNum == 0 {
+    func randomPush(sender: UITapGestureRecognizer) {
+        if ballNum < maxBallNum {
             newBall()
             return
         }
-        ballBehavior.activeRandomPush(ballBehavior.balls.last!)
+        for ball in ballBehavior.balls {
+            ballBehavior.activeRandomPush(ball, magnitude: speedRatio)
+        }
+        
     }
     
     // MARK: - Object Specs
+    var speedRatio = Float(0.5)
+    var brickRows = 3
     
     private var ballNum = 0
+    private var maxBallNum = 1
     
     var ballSize: CGSize {
         let diameter = 10
@@ -80,7 +88,6 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     
     struct Constants {
         static let BrickColumns = 10
-        static let BrickRows = 5
         static let BrickTotalWidth: CGFloat = 1.0
         static let BrickTotalHeight: CGFloat = 0.2
         static let BrickTopSpacing: CGFloat = 0.05
@@ -92,7 +99,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         static let ResumeString = "Resume"
     }
     
-    @IBAction func togglePause(sender: UIButton) {
+    func togglePause(sender: UIButton) {
         print("\(sender.titleLabel!.text)")
         if sender.titleLabel!.text! == Constants.PauseString {
             print("stopping")
@@ -108,9 +115,12 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         ballBehavior.collisionDelegate = self
+        Setting(defaultRow: brickRows, defaultBalls: 1, defaultSpeed: speedRatio)
         drawBricks()
         print("bricks: \(bricks.count)")
         dynamicAnimator.addBehavior(ballBehavior)
+        gameView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "randomPush:"))
+        gameView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "movePaddle:"))
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,8 +129,60 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         setBrickBoundaries()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        //change game configuration if settings have changed
+        setAutoStartTimer()
+        if Setting().Changed == true {
+            Setting().Changed = false
+            maxBallNum = Setting().balls
+            print("setting rowNUm: \(Setting().row)")
+            brickRows = Setting().row
+            speedRatio = Setting().speed
+            for (_, brick) in bricks {
+                brick.viewInstance.removeFromSuperview()
+            }
+            for ball in ballBehavior.balls {
+                ball.removeFromSuperview()
+            }
+            bricks.removeAll(keepCapacity: true)
+            dynamicAnimator.removeAllBehaviors()
+            ballBehavior = BallBehavior()
+            dynamicAnimator.addBehavior(ballBehavior)
+            ballBehavior.collisionDelegate = self
+            ballNum = 0
+            bricksDestroyed = 0
+            drawBricks()
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        autoStartTimer?.invalidate()
+        autoStartTimer = nil
+    }
+    
+    func setAutoStartTimer() {
+        if Setting().autoStart {
+            autoStartTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "autoStart:", userInfo: nil, repeats: true)
+        }
+    }
+    
+    func autoStart(timer: NSTimer) {
+        if ballNum < maxBallNum {
+            newBall()
+        }
+    }
+    
     func restartGame() {
-        gameView.subviews.forEach({ $0.removeFromSuperview() })
+        for (_, brick) in bricks {
+            brick.viewInstance.removeFromSuperview()
+        }
+        bricks.removeAll(keepCapacity: true)
+        dynamicAnimator.removeAllBehaviors()
+        ballBehavior = BallBehavior()
+        dynamicAnimator.addBehavior(ballBehavior)
+        ballBehavior.collisionDelegate = self
+
         ballNum = 0
         bricksDestroyed = 0
         gameView.addSubview(paddleRect)
@@ -133,11 +195,11 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     private func drawBricks() {
         //only add if first starting up or restarting
         if bricks.count > 0 {return}
-        
-        let heightProportion = Constants.BrickTotalHeight / CGFloat(Constants.BrickRows)
+        print("number of rows: \(brickRows)")
+        let heightProportion = Constants.BrickTotalHeight / CGFloat(brickRows)
         let widthProportion = Constants.BrickTotalWidth / CGFloat(Constants.BrickColumns)
         var frame = CGRect(origin: CGPointZero, size: CGSize(width: widthProportion, height: heightProportion))
-        for row in 0..<Constants.BrickRows {
+        for row in 0..<brickRows {
             for col in 0..<Constants.BrickColumns {
                 frame.origin.x = widthProportion * CGFloat(col)
                 frame.origin.y = heightProportion * CGFloat(row) + Constants.BrickTopSpacing
@@ -150,7 +212,6 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
                 //generate random type of brick
                 let type = Int(arc4random() % 3)
                 brickView.backgroundColor = Constants.BrickColors[type]
-                print("added subview \(row * Constants.BrickColumns + col)")
                 gameView.addSubview(brickView)
                 bricks[row * Constants.BrickColumns + col] = Brick(Frame: frame, viewInstance: brickView, hitPoints: type + 1)
             }
@@ -198,7 +259,6 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
            
         }
         //check if user has destroyed all bricks
-        print("\(bricksDestroyed)")
         if bricks.count == 0 {
             print("destoryed: \(bricksDestroyed) bricks total: \(bricks.count)")
             let alert = UIAlertController(title: "You've won!", message: "Would you like to play again?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -240,6 +300,9 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         ballView.backgroundColor = UIColor.blueColor()
         ballBehavior.addBall(ballView)
         ballNum++
+        if Setting().autoStart {
+            ballBehavior.activeRandomPush(ballView, magnitude: speedRatio)
+        }
     }
 
 }

@@ -80,9 +80,9 @@ class BallBehavior: UIDynamicBehavior
         ball.removeFromSuperview()
     }
     
-    func activeRandomPush(ball: UIView) {
+    func activeRandomPush(ball: UIView, magnitude: Float) {
         let push = UIPushBehavior(items: [ball], mode: .Instantaneous)
-        push.magnitude = 0.05
+        push.magnitude = CGFloat(0.1 * magnitude)
         
         push.angle = CGFloat(Double(arc4random()) * M_PI * 2 / Double(UINT32_MAX))
         push.action = { [weak push] in

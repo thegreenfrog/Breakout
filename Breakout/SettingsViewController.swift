@@ -10,6 +10,82 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    
+    @IBOutlet weak var rowNumDisplay: UILabel!
+    @IBOutlet weak var rowNumSlider: UISlider!
+    @IBOutlet weak var ballNumDisplay: UILabel!
+    @IBOutlet weak var speedPercent: UILabel!
+    @IBOutlet weak var speedSlider: UISlider!
+    @IBOutlet weak var ballStepper: UIStepper!
+
+    
+    @IBAction func rowNumChanged(sender: UISlider) {
+        rows = Int(sender.value)
+        print("Setting row: \(rows)")
+        Setting().row = rows
+        print("new row setting: \(Setting().row)")
+        Setting().Changed = true
+    }
+    
+    @IBAction func ballNumChanged(sender: UIStepper) {
+        ballNum = Int(sender.value)
+        Setting().balls = ballNum
+        Setting().Changed = true
+        if ballNum > 1 {
+            Setting().autoStart = true
+        }
+    }
+    
+    @IBAction func speedChanged(sender: UISlider) {
+        print(sender.value)
+        speed = sender.value
+        Setting().speed = speed
+        Setting().Changed = true
+    }
+    
+    var rows: Int {
+        get {
+            return Int(Setting().row)
+        }
+        set {
+            print(newValue)
+            rowNumDisplay.text = "\(newValue)"
+            //rowNumSlider.value = Float(newValue)
+        }
+    }
+    
+    var ballNum: Int {
+        get {
+            return Int(ballNumDisplay.text!)!
+        }
+        set {
+            ballNumDisplay.text = "\(newValue)"
+            ballStepper.value = Double(newValue)
+        }
+    }
+    
+    var speed: Float {
+        get {
+            return Float(Setting().speed)
+        }
+        set {
+            print("set speed: \(newValue)")
+            speedPercent.text = "\(Int(newValue * 100)) %"
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        rows = Setting().row
+        rowNumSlider.maximumValue = Float(10)
+        rowNumSlider.setValue(Float(rows), animated: true)
+        ballNum = Setting().balls
+        speed = Setting().speed
+        speedSlider.maximumValue = Float(1)
+        print(speed)
+        speedSlider.setValue(speed * 100, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
