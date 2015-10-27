@@ -177,6 +177,9 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         for (_, brick) in bricks {
             brick.viewInstance.removeFromSuperview()
         }
+        for ball in ballBehavior.balls {
+            ball.removeFromSuperview()
+        }
         bricks.removeAll(keepCapacity: true)
         dynamicAnimator.removeAllBehaviors()
         ballBehavior = BallBehavior()

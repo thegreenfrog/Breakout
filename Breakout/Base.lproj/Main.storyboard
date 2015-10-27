@@ -202,11 +202,11 @@
             </objects>
             <point key="canvasLocation" x="872" y="1042"/>
         </scene>
-        <!--Item-->
+        <!--Settings-->
         <scene sceneID="Mvl-do-BL4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VXV-1B-pxt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Ypl-f5-2eY"/>
+                    <tabBarItem key="tabBarItem" title="Settings" id="Ypl-f5-2eY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PO4-6A-2MD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
