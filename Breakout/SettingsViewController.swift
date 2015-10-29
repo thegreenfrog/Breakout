@@ -22,34 +22,34 @@ class SettingsViewController: UIViewController {
     @IBAction func rowNumChanged(sender: UISlider) {
         rows = Int(sender.value)
         //print("Setting row: \(Int(sender.value))")
-        Setting().Changed = true
+        Setting.Changed = true
     }
     
     @IBAction func ballNumChanged(sender: UIStepper) {
         ballNum = Int(sender.value)
-        Setting().balls = ballNum
-        Setting().Changed = true
+        Setting.balls = ballNum
+        Setting.Changed = true
         if ballNum > 1 {
-            Setting().autoStart = true
+            Setting.autoStart = true
         }
     }
     
     @IBAction func speedChanged(sender: UISlider) {
         print(sender.value)
         speed = sender.value
-        Setting().speed = speed
-        Setting().Changed = true
+        Setting.speed = speed
+        Setting.Changed = true
     }
     
     var rows: Int {
         get {
-            return Int(Setting().row)
+            return Int(Setting.row)
         }
         set {
             //print(newValue)
             rowNumDisplay.text = "\(newValue)"
-            Setting().row = newValue
-            print("new row setting: \(Setting().row)")
+            Setting.row = newValue
+            print("new row setting: \(Setting.row)")
             //rowNumSlider.value = Float(newValue)
         }
     }
@@ -66,7 +66,7 @@ class SettingsViewController: UIViewController {
     
     var speed: Float {
         get {
-            return Float(Setting().speed)
+            return Float(Setting.speed)
         }
         set {
             print("set speed: \(newValue)")
@@ -76,11 +76,11 @@ class SettingsViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        rows = Setting().row
+        rows = Setting.row
         rowNumSlider.maximumValue = Float(10)
         rowNumSlider.setValue(Float(rows), animated: true)
-        ballNum = Setting().balls
-        speed = Setting().speed
+        ballNum = Setting.balls
+        speed = Setting.speed
         speedSlider.maximumValue = Float(1)
         //print(speed)
         speedSlider.setValue(speed, animated: true)

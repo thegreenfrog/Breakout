@@ -132,12 +132,11 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     override func viewDidAppear(animated: Bool) {
         //change game configuration if settings have changed
         setAutoStartTimer()
-        if Setting().Changed == true {
-            Setting().Changed = false
-            maxBallNum = Setting().balls
-            print("setting rowNUm: \(Setting().row)")
-            brickRows = Setting().row
-            speedRatio = Setting().speed
+        if Setting.Changed == true {
+            Setting.Changed = false
+            maxBallNum = Setting.balls
+            brickRows = Setting.row
+            speedRatio = Setting.speed
             for (_, brick) in bricks {
                 brick.viewInstance.removeFromSuperview()
             }
@@ -162,7 +161,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     func setAutoStartTimer() {
-        if Setting().autoStart {
+        if Setting.autoStart {
             autoStartTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "autoStart:", userInfo: nil, repeats: true)
         }
     }
@@ -303,7 +302,7 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         ballView.backgroundColor = UIColor.blueColor()
         ballBehavior.addBall(ballView)
         ballNum++
-        if Setting().autoStart {
+        if Setting.autoStart {
             ballBehavior.activeRandomPush(ballView, magnitude: speedRatio)
         }
     }

@@ -18,29 +18,29 @@ class Setting {
         static let ChangedKey = "Setting.Changed"
     }
     
-    private let defaults = NSUserDefaults.standardUserDefaults()
+    static let defaults = NSUserDefaults.standardUserDefaults()
     
-    var row: Int {
+    static var row: Int {
         get { return defaults.objectForKey(Constants.RowsKey) as? Int ?? 5 }
         set { defaults.setObject(newValue, forKey: Constants.RowsKey) }
     }
     
-    var balls: Int {
+    static var balls: Int {
         get { return defaults.objectForKey(Constants.BallsKey) as? Int ?? 1 }
         set { defaults.setObject(newValue, forKey: Constants.BallsKey) }
     }
     
-    var speed: Float {
+    static var speed: Float {
         get {return defaults.objectForKey(Constants.SpeedKey) as? Float ?? 1.0 }
         set { defaults.setObject(newValue, forKey: Constants.SpeedKey) }
     }
     
-    var Changed: Bool {
+    static var Changed: Bool {
         get { return defaults.objectForKey(Constants.ChangedKey) as? Bool ?? false}
         set { defaults.setObject(newValue, forKey: Constants.ChangedKey) }
     }
     
-    var autoStart: Bool {
+    static var autoStart: Bool {
         get { return defaults.objectForKey(Constants.AutoStartKey) as? Bool ?? false}
         set { defaults.setObject(newValue, forKey: Constants.AutoStartKey) }
     }
@@ -48,10 +48,10 @@ class Setting {
     convenience init(defaultRow: Int, defaultBalls: Int, defaultSpeed: Float) {
         self.init()
         print("\(defaultRow), \(defaultBalls)")
-        row = defaultRow
-        balls = defaultBalls
-        speed = defaultSpeed
-        Changed = false
-        autoStart = false
+        Setting.row = defaultRow
+        Setting.balls = defaultBalls
+        Setting.speed = defaultSpeed
+        Setting.Changed = false
+        Setting.autoStart = false
     }
 }

@@ -17,7 +17,7 @@
 		8CB3BE881BD187C600639535 /* BallBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB3BE871BD187C600639535 /* BallBehavior.swift */; settings = {ASSET_TAGS = (); }; };
 		8CFB8AE11BD9E621009932A2 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFB8AE01BD9E621009932A2 /* settings.png */; settings = {ASSET_TAGS = (); }; };
 		8CFB8AE71BD9F57D009932A2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFB8AE61BD9F57D009932A2 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		8CFB8AE91BD9F7F6009932A2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFB8AE81BD9F7F6009932A2 /* Settings.swift */; settings = {ASSET_TAGS = (); }; };
+		8CFB8AE91BD9F7F6009932A2 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFB8AE81BD9F7F6009932A2 /* Setting.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		8CB3BE871BD187C600639535 /* BallBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallBehavior.swift; sourceTree = "<group>"; };
 		8CFB8AE01BD9E621009932A2 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8CFB8AE61BD9F57D009932A2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		8CFB8AE81BD9F7F6009932A2 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		8CFB8AE81BD9F7F6009932A2 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +107,7 @@
 			children = (
 				8CB3BE591BD1866000639535 /* Main.storyboard */,
 				8CB3BE831BD186EE00639535 /* GameViewController.swift */,
-				8CFB8AE81BD9F7F6009932A2 /* Settings.swift */,
+				8CFB8AE81BD9F7F6009932A2 /* Setting.swift */,
 				8CFB8AE61BD9F57D009932A2 /* SettingsViewController.swift */,
 				8CB3BE871BD187C600639535 /* BallBehavior.swift */,
 				8CB3BE5C1BD1866000639535 /* Assets.xcassets */,
@@ -273,7 +273,7 @@
 				8CB3BE841BD186EE00639535 /* GameViewController.swift in Sources */,
 				8CB3BE561BD1866000639535 /* AppDelegate.swift in Sources */,
 				8CFB8AE71BD9F57D009932A2 /* SettingsViewController.swift in Sources */,
-				8CFB8AE91BD9F7F6009932A2 /* Settings.swift in Sources */,
+				8CFB8AE91BD9F7F6009932A2 /* Setting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
