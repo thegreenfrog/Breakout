@@ -137,27 +137,12 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
             maxBallNum = Setting.balls
             brickRows = Setting.row
             speedRatio = Setting.speed
-            for (_, brick) in bricks {
-                brick.viewInstance.removeFromSuperview()
-            }
-            for ball in ballBehavior.balls {
-                ball.removeFromSuperview()
-            }
-            bricks.removeAll(keepCapacity: true)
-            dynamicAnimator.removeAllBehaviors()
-            ballBehavior = BallBehavior()
-            dynamicAnimator.addBehavior(ballBehavior)
-            ballBehavior.collisionDelegate = self
-            ballNum = 0
-            bricksDestroyed = 0
-            drawBricks()
+            restartGame()
         }
     }
     
     override func viewDidDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        autoStartTimer?.invalidate()
-        autoStartTimer = nil
+
     }
     
     func setAutoStartTimer() {
@@ -299,6 +284,10 @@ class GameViewController: UIViewController, UICollisionBehaviorDelegate {
         frame.origin.x = gameView.bounds.midX
         frame.origin.y = gameView.bounds.midY
         let ballView = UIView(frame: frame)
+        ballView.clipsToBounds = true
+        let circle = CGRect(x: ballView.center.x, y: ballView.center.y, width: ballSize.width, height: ballSize.height)
+        ballView.frame = circle
+        ballView.layer.cornerRadius = ballSize.height/2.0
         ballView.backgroundColor = UIColor.blueColor()
         ballBehavior.addBall(ballView)
         ballNum++

@@ -53,6 +53,13 @@ class BallBehavior: UIDynamicBehavior
         addChildBehavior(objectBehavior)
     }
     
+    func pauseAnimation() {
+        for ball in balls {
+            ball.layer.speed = 0
+            ball.layer.timeOffset = ball.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+        }
+    }
+    
     func addBarrier(path: UIBezierPath, named name: NSCopying) {
         collider.removeBoundaryWithIdentifier(name)
         collider.addBoundaryWithIdentifier(name, forPath: path)
